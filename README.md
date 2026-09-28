@@ -1,4 +1,4 @@
-# polymarket-backtester
+# resolvedkit: a Polymarket backtester
 
 **Backtest Polymarket strategies against the real order book.** Orders fill by walking the L2 ladder,
 fees follow Polymarket's taker-fee curve, orders land after a realistic delay, and positions settle at
@@ -13,8 +13,8 @@ taker fee on top. On the bundled sample, the same strategy with the same fees re
 filled at the mid and **+26.0%** when filled against the book. That gap is often an entire edge.
 
 ```bash
-pip install polymarket-backtester
-polymarket-backtester run late_favorite --compare-mid
+pip install resolvedkit
+resolvedkit run late_favorite --compare-mid
 ```
 
 ## What it models
@@ -48,13 +48,13 @@ polymarket-backtester run late_favorite --compare-mid
 ```
 
 `side` is `UP`, `DOWN`, `favorite` or `underdog`. Without `exit`, the position is held to resolution.
-Save it as `my_strategy.json` and run `polymarket-backtester run my_strategy.json`. Two examples are
+Save it as `my_strategy.json` and run `resolvedkit run my_strategy.json`. Two examples are
 bundled: `late_favorite` and `early_underdog_scalp`.
 
 **Python**, for anything else:
 
 ```python
-from polymarket_backtester import UP, Backtester, Strategy, load_sample
+from resolvedkit import UP, Backtester, Strategy, load_sample
 
 class DepthImbalance(Strategy):
     def on_book(self, ctx, book):
@@ -80,11 +80,11 @@ print(Backtester(load_sample(), DepthImbalance()).run().summary())
 |---|---|
 | `load_sample()` | 18 settled BTC 15-minute markets, bundled (CC BY 4.0) |
 | `ResolvedMarketsAPI(crypto="BTC", timeframe="15m", limit=50)` | Historical Polymarket order books from [Resolved Markets](https://resolvedmarkets.com). A free API key covers recent crypto markets; paid plans add full history plus sports, weather, equities and economics. |
-| `ParquetSource("folder/")` | Your own data in the documented [two-file Parquet layout](src/polymarket_backtester/data/parquet.py) |
+| `ParquetSource("folder/")` | Your own data in the documented [two-file Parquet layout](src/resolvedkit/data/parquet.py) |
 
 ```bash
 export RESOLVED_MARKETS_API_KEY=rm_...   # free key: https://resolvedmarkets.com/api-keys
-polymarket-backtester run late_favorite --data api --crypto ETH --timeframe 5m --limit 50
+resolvedkit run late_favorite --data api --crypto ETH --timeframe 5m --limit 50
 ```
 
 The sample is thinned to one snapshot per side per second and the top 20 levels. The API serves every

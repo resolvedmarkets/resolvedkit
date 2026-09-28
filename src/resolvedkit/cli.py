@@ -1,4 +1,4 @@
-"""polymarket-backtester run spec.json [--data sample|api|<folder>] [--compare-mid] [--json]"""
+"""resolvedkit run spec.json [--data sample|api|<folder>] [--compare-mid] [--json]"""
 from __future__ import annotations
 
 import argparse
@@ -32,10 +32,10 @@ def _spec_path(name: str):
     p = Path(name)
     if p.exists():
         return p
-    bundled = files("polymarket_backtester") / "specs" / f"{p.stem}.json"
+    bundled = files("resolvedkit") / "specs" / f"{p.stem}.json"
     if bundled.is_file():
         return bundled
-    examples = sorted(x.name.removesuffix(".json") for x in (files("polymarket_backtester") / "specs").iterdir())
+    examples = sorted(x.name.removesuffix(".json") for x in (files("resolvedkit") / "specs").iterdir())
     raise SystemExit(f"No spec file '{name}'. Bundled examples: {', '.join(examples)}")
 
 
@@ -46,7 +46,7 @@ def _print(label: str, s: dict) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="polymarket-backtester", description="Backtest Polymarket strategies against the real order book.")
+    p = argparse.ArgumentParser(prog="resolvedkit", description="Backtest Polymarket strategies against the real order book.")
     sub = p.add_subparsers(dest="cmd", required=True)
     run = sub.add_parser("run", help="run a JSON strategy spec")
     run.add_argument("spec", help="path to a JSON strategy spec, or a bundled example: late_favorite, early_underdog_scalp")

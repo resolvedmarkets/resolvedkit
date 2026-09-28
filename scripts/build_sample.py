@@ -7,10 +7,10 @@ Takes the most recent settled BTC 15-minute markets, one snapshot per side per s
 import sys
 from pathlib import Path
 
-from polymarket_backtester.data import ResolvedMarketsAPI, write_parquet
+from resolvedkit.data import ResolvedMarketsAPI, write_parquet
 
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 20
-OUT = Path(__file__).resolve().parent.parent / "src" / "polymarket_backtester" / "sample_data"
+OUT = Path(__file__).resolve().parent.parent / "src" / "resolvedkit" / "sample_data"
 
 api = ResolvedMarketsAPI(crypto="BTC", timeframe="15m", limit=N, thin_ms=1000, depth=20)
 markets = [m for m in api.markets() if m.payout is not None]

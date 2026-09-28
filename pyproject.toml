@@ -1,13 +1,13 @@
 [project]
-name = "polymarket-backtester"
+name = "resolvedkit"
 version = "0.1.0"
-description = "Backtest Polymarket strategies against the real order book: fills walk the L2 ladder, fees follow Polymarket's curve, positions settle at resolution."
+description = "A Polymarket backtester that tests strategies against the real order book. Fills walk the L2 ladder, fees follow Polymarket's curve, positions settle at resolution."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [{ name = "Resolved Markets", email = "info@resolvedmarkets.com" }]
-keywords = ["polymarket", "backtesting", "prediction-markets", "orderbook", "trading", "quant"]
+keywords = ["polymarket", "polymarket-backtester", "backtesting", "prediction-markets", "orderbook", "trading", "quant"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Financial and Insurance Industry",
@@ -22,12 +22,12 @@ plot = ["matplotlib>=3.7"]
 dev = ["pytest>=8", "matplotlib>=3.7"]
 
 [project.scripts]
-polymarket-backtester = "polymarket_backtester.cli:main"
+resolvedkit = "resolvedkit.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/resolvedmarkets/polymarket-backtester"
+Homepage = "https://github.com/resolvedmarkets/resolvedkit"
 Data = "https://resolvedmarkets.com"
-Issues = "https://github.com/resolvedmarkets/polymarket-backtester/issues"
+Issues = "https://github.com/resolvedmarkets/resolvedkit/issues"
 
 [build-system]
 requires = ["hatchling>=1.26"]

@@ -1,5 +1,5 @@
 """A strategy in Python: buy UP when its book shows 3x more bid depth than ask depth."""
-from polymarket_backtester import UP, Backtester, Strategy, load_sample
+from resolvedkit import UP, Backtester, Strategy, load_sample
 
 
 class DepthImbalance(Strategy):

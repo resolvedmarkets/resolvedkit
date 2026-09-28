@@ -1,7 +1,7 @@
 import pytest
 
-from polymarket_backtester import DOWN, UP, Backtester, Book, Level, Market, RuleStrategy, Strategy, taker_fee
-from polymarket_backtester.fills import walk_buy, walk_sell
+from resolvedkit import DOWN, UP, Backtester, Book, Level, Market, RuleStrategy, Strategy, taker_fee
+from resolvedkit.fills import walk_buy, walk_sell
 
 ASKS = (Level(0.50, 100), Level(0.52, 100), Level(0.60, 1000))
 BIDS = (Level(0.48, 50), Level(0.45, 100))
@@ -165,6 +165,6 @@ def test_take_profit_triggers_on_exact_tick_despite_float_rounding():
 
 
 def test_parse_ts_converts_offsets_to_utc():
-    from polymarket_backtester.data.base import parse_ts
+    from resolvedkit.data.base import parse_ts
 
     assert parse_ts("2026-09-28 13:15:15.955") == parse_ts("2026-09-28T15:15:15.955+02:00")

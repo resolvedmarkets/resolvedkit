@@ -4,10 +4,10 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 
-from polymarket_backtester import Backtester, RuleStrategy, load_sample
+from resolvedkit import Backtester, RuleStrategy, load_sample
 
 HERE = Path(__file__).parent
-spec = json.loads((HERE.parent / "src" / "polymarket_backtester" / "specs" / "late_favorite.json").read_text())
+spec = json.loads((HERE.parent / "src" / "resolvedkit" / "specs" / "late_favorite.json").read_text())
 data = load_sample()
 
 

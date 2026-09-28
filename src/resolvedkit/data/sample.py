@@ -11,4 +11,4 @@ from .parquet import ParquetSource
 
 
 def load_sample() -> ParquetSource:
-    return ParquetSource(files("polymarket_backtester") / "sample_data")
+    return ParquetSource(files("resolvedkit") / "sample_data")

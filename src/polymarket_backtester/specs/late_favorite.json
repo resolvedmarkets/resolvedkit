@@ -1,0 +1,4 @@
+{
+  "name": "Buy the favorite in the last 2 minutes, hold to resolution",
+  "entry": {"side": "favorite", "seconds_before_end": 120, "min_price": 0.6, "max_price": 0.9, "usd": 250, "max_slippage": 0.02}
+}

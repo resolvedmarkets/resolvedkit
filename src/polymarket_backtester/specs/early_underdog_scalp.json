@@ -1,0 +1,5 @@
+{
+  "name": "Buy the underdog with 10 minutes left, take 5 cents or stop at 10",
+  "entry": {"side": "underdog", "seconds_before_end": 600, "min_price": 0.3, "max_price": 0.5, "usd": 250, "max_slippage": 0.02},
+  "exit": {"take_profit": 0.05, "stop_loss": 0.10}
+}

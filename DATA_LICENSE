@@ -1,0 +1,9 @@
+The sample dataset in src/polymarket_backtester/sample_data/ is © 2026 Elcara LLC-FZ (Resolved Markets)
+and licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Attribution: "Polymarket order-book data from Resolved Markets (https://resolvedmarkets.com)".
+
+It contains settled BTC 15-minute Polymarket markets, thinned to one snapshot per side per second and the
+top 20 price levels. The full archive (every snapshot, full depth, all categories) is available through
+the Resolved Markets API.

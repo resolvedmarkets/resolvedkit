@@ -1,0 +1,37 @@
+[project]
+name = "polymarket-backtester"
+version = "0.1.0"
+description = "Backtest Polymarket strategies against the real order book: fills walk the L2 ladder, fees follow Polymarket's curve, positions settle at resolution."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Resolved Markets", email = "info@resolvedmarkets.com" }]
+keywords = ["polymarket", "backtesting", "prediction-markets", "orderbook", "trading", "quant"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = ["pyarrow>=14", "requests>=2.31"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+dev = ["pytest>=8", "matplotlib>=3.7"]
+
+[project.scripts]
+polymarket-backtester = "polymarket_backtester.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/resolvedmarkets/polymarket-backtester"
+Data = "https://resolvedmarkets.com"
+Issues = "https://github.com/resolvedmarkets/polymarket-backtester/issues"
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

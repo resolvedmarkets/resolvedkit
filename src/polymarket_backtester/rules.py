@@ -23,6 +23,7 @@ from .engine import Context, Strategy
 from .models import DOWN, UP, Book
 
 _SIDES = {"UP", "DOWN", "favorite", "underdog"}
+EPS = 1e-9  # price comparisons: 0.52 + 0.05 is 0.5700000000000001 in floating point
 
 
 @dataclass
@@ -38,7 +39,7 @@ class RuleStrategy(Strategy):
                 raise ValueError(f"entry.{k} must be a positive number")
 
     def on_start(self, ctx: Context) -> None:
-        ctx.state.update(entered=False, side=None, entry_price=None, exited=False)
+        ctx.state.update(side=None)
 
     def _pick_side(self, ctx: Context) -> str | None:
         want = self.spec["entry"]["side"]
@@ -51,27 +52,30 @@ class RuleStrategy(Strategy):
         return fav if want == "favorite" else (DOWN if fav == UP else UP)
 
     def on_book(self, ctx: Context, book: Book) -> None:
+        # State comes from fills, not from orders placed: a rejected or partial order is retried.
         e, x, st = self.spec["entry"], self.spec.get("exit") or {}, ctx.state
-        if not st["entered"]:
+        if ctx.pending_orders():
+            return
+        side = st["side"]
+        entered = side is not None and any(f.action == "BUY" for f in ctx.position(side).fills)
+        if not entered:
             if not (0 < ctx.seconds_to_end <= e["seconds_before_end"]):
                 return
             side = self._pick_side(ctx)
             b = ctx.book(side) if side else None
             if not b or b.best_ask is None:
                 return
-            if not (e.get("min_price", 0.0) <= b.best_ask <= e.get("max_price", 1.0)):
+            if not (e.get("min_price", 0.0) - EPS <= b.best_ask <= e.get("max_price", 1.0) + EPS):
                 return
             ctx.buy(side, e["usd"], max_price=b.best_ask + e.get("max_slippage", 0.02))
-            st.update(entered=True, side=side)
+            st["side"] = side
             return
-        side = st["side"]
         pos = ctx.position(side)
-        if st["exited"] or pos.shares <= 1e-9 or book.side != side or not x:
+        if pos.shares <= 1e-9 or book.side != side or not x or book.best_bid is None:
             return
         entry = pos.cost / pos.shares
         bid = book.best_bid
-        if bid is None:
-            return
-        if ("take_profit" in x and bid >= entry + x["take_profit"]) or ("stop_loss" in x and bid <= entry - x["stop_loss"]):
+        if ("take_profit" in x and bid >= entry + x["take_profit"] - EPS) or (
+            "stop_loss" in x and bid <= entry - x["stop_loss"] + EPS
+        ):
             ctx.sell(side)
-            st["exited"] = True

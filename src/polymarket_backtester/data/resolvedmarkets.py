@@ -81,7 +81,7 @@ class ResolvedMarketsAPI:
                 for s in page:
                     bids = tuple(Level(l["price"], l["size"]) for l in s.get("bids") or ())
                     asks = tuple(Level(l["price"], l["size"]) for l in s.get("asks") or ())
-                    if self.depth:
+                    if self.depth is not None:
                         bids, asks = bids[: self.depth], asks[: self.depth]
                     books.append(Book(ts=parse_ts(s["timestamp"]), side=side, bids=bids, asks=asks))
                 if len(page) < PAGE:

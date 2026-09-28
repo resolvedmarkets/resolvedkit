@@ -9,8 +9,8 @@ no API key.
 
 Most prediction-market backtests fill at the mid price. That price is not one you can trade at: a
 market buy pays the ask, walks up the book when the size is larger than the best level, and pays a
-taker fee on top. On the bundled sample, the same strategy with the same fees returns **+29.4%** when
-filled at the mid and **+25.0%** when filled against the book. That gap is often an entire edge.
+taker fee on top. On the bundled sample, the same strategy with the same fees returns **+29.5%** when
+filled at the mid and **+26.0%** when filled against the book. That gap is often an entire edge.
 
 ```bash
 pip install polymarket-backtester
@@ -24,10 +24,11 @@ polymarket-backtester run late_favorite --compare-mid
   `fill_model="mid"`, to measure how much they overstate.
 - **Polymarket fees.** `shares × rate × p × (1 − p)` is charged per matched level, with the rate for
   each category (crypto 0.07, sports 0.05, and so on).
-- **Latency.** An order fills against the first book at least `latency_ms` after it was placed (250 ms
-  by default), not the book that triggered it.
+- **Latency.** An order fills against the book standing `latency_ms` after it was placed (250 ms by
+  default), not the book that triggered it.
 - **Settlement.** Shares still held at the end pay out the market's resolved price, 1 or 0 per share, or
-  a fraction for split outcomes.
+  a fraction for split outcomes. Unresolved markets are marked at the last mid and counted in
+  `unresolved_markets`.
 - **Placeholder books.** Freshly listed markets often show a 0.01 / 0.99 book before real quoting
   starts. Orders against it are rejected rather than filled at 0.99.
 - **Metrics.** Results include PnL, return on money invested, fees, win rate, partial fills, average
@@ -39,7 +40,7 @@ polymarket-backtester run late_favorite --compare-mid
 
 ```json
 {
-  "name": "Buy the favorite in the last 2 minutes, hold to resolution",
+  "name": "Buy the favorite in the last 2 minutes, take 5 cents or stop at 10",
   "entry": {"side": "favorite", "seconds_before_end": 120, "min_price": 0.6, "max_price": 0.9,
             "usd": 250, "max_slippage": 0.02},
   "exit": {"take_profit": 0.05, "stop_loss": 0.10}
@@ -91,6 +92,8 @@ snapshot at full depth.
 
 ## Honest limits
 
+- Rejected or partly filled orders are retried by the JSON rules on the next snapshot; in Python
+  strategies, check `ctx.pending_orders()` and your position yourself.
 - Your orders don't move the book: each fill walks the snapshot as recorded, and later snapshots don't
   reflect your trades. For small size relative to depth this is close; for large size it's optimistic.
 - Resting (maker) orders aren't simulated yet, since queue position isn't in snapshot data. All fills

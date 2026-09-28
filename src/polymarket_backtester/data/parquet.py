@@ -78,7 +78,8 @@ def write_parquet(folder: str | Path, markets: list[Market], books: dict[str, li
     rows = []
     for market_id, bs in books.items():
         for b in bs:
-            bids, asks = b.bids[:depth] if depth else b.bids, b.asks[:depth] if depth else b.asks
+            bids = b.bids if depth is None else b.bids[:depth]
+            asks = b.asks if depth is None else b.asks[:depth]
             rows.append({
                 "market_id": market_id, "ts": b.ts, "side": b.side,
                 "bid_px": [l.price for l in bids], "bid_sz": [l.size for l in bids],

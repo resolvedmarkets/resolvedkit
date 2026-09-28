@@ -22,8 +22,9 @@ def parse_ts(value: str | int | float) -> int:
     """API timestamps are UTC strings like '2026-09-28 13:15:15.955'; return epoch ms."""
     if isinstance(value, (int, float)):
         return int(value)
-    dt = datetime.fromisoformat(value.replace("Z", "").replace(" ", "T"))
-    return int(dt.replace(tzinfo=timezone.utc).timestamp() * 1000)
+    dt = datetime.fromisoformat(value.replace("Z", "+00:00").replace(" ", "T"))
+    dt = dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt.astimezone(timezone.utc)
+    return int(dt.timestamp() * 1000)
 
 
 def thin(books: list[Book], every_ms: int) -> list[Book]:

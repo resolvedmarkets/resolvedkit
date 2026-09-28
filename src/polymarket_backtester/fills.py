@@ -34,6 +34,8 @@ def walk_buy(asks: tuple[Level, ...], usd: float, max_price: float | None = None
     """Spend up to `usd` lifting asks from the best price up, never paying above `max_price`."""
     legs, spent = [], 0.0
     for lvl in asks:
+        if lvl.price <= 0 or lvl.size <= 0:
+            continue
         remaining = usd - spent
         if remaining <= 1e-9:
             break
@@ -49,6 +51,8 @@ def walk_sell(bids: tuple[Level, ...], shares: float, min_price: float | None = 
     """Sell up to `shares` into bids from the best price down, never selling below `min_price`."""
     legs, sold = [], 0.0
     for lvl in bids:
+        if lvl.size <= 0:
+            continue
         remaining = shares - sold
         if remaining <= 1e-9:
             break

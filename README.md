@@ -5,7 +5,7 @@ fees follow Polymarket's taker-fee curve, orders land after a realistic delay, a
 the market's actual resolution. It ships with sample data, so it runs straight after `pip install`, with
 no API key.
 
-![Same strategy backtested with mid-price fills and on the real order book](docs/mid-vs-book.png)
+![Same strategy backtested with mid-price fills and on the real order book](https://raw.githubusercontent.com/resolvedmarkets/resolvedkit/main/docs/mid-vs-book.png)
 
 Most prediction-market backtests fill at the mid price. That price is not one you can trade at: a
 market buy pays the ask, walks up the book when the size is larger than the best level, and pays a
@@ -80,7 +80,7 @@ print(Backtester(load_sample(), DepthImbalance()).run().summary())
 |---|---|
 | `load_sample()` | 18 settled BTC 15-minute markets, bundled (CC BY 4.0) |
 | `ResolvedMarketsAPI(crypto="BTC", timeframe="15m", limit=50)` | Historical Polymarket order books from [Resolved Markets](https://resolvedmarkets.com). A free API key covers recent crypto markets; paid plans add full history plus sports, weather, equities and economics. |
-| `ParquetSource("folder/")` | Your own data in the documented [two-file Parquet layout](src/resolvedkit/data/parquet.py) |
+| `ParquetSource("folder/")` | Your own data in the documented [two-file Parquet layout](https://github.com/resolvedmarkets/resolvedkit/blob/main/src/resolvedkit/data/parquet.py) |
 
 ```bash
 export RESOLVED_MARKETS_API_KEY=rm_...   # free key: https://resolvedmarkets.com/api-keys
@@ -107,4 +107,4 @@ backtests · an MCP server so agents can run backtests.
 
 ## License
 
-Code: MIT. Sample data: CC BY 4.0, see [DATA_LICENSE](DATA_LICENSE).
+Code: MIT. Sample data: CC BY 4.0, see [DATA_LICENSE](https://github.com/resolvedmarkets/resolvedkit/blob/main/DATA_LICENSE).

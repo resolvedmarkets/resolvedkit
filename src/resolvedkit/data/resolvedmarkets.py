@@ -1,7 +1,7 @@
 """Historical Polymarket order books from the Resolved Markets API (https://resolvedmarkets.com).
 
-A free API key covers crypto up/down markets (the 5 most recent per coin and timeframe);
-paid plans unlock full history and other categories. Set RESOLVED_MARKETS_API_KEY or pass api_key=.
+A free API key covers every crypto up/down market back to March 2026;
+paid plans add other categories. Set RESOLVED_MARKETS_API_KEY or pass api_key=.
 """
 from __future__ import annotations
 

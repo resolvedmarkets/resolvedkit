@@ -79,7 +79,7 @@ print(Backtester(load_sample(), DepthImbalance()).run().summary())
 | Source | Use |
 |---|---|
 | `load_sample()` | 18 settled BTC 15-minute markets, bundled (CC BY 4.0) |
-| `ResolvedMarketsAPI(crypto="BTC", timeframe="15m", limit=50)` | Historical Polymarket order books from [Resolved Markets](https://resolvedmarkets.com). A free API key covers recent crypto markets; paid plans add full history plus sports, weather, equities and economics. |
+| `ResolvedMarketsAPI(crypto="BTC", timeframe="15m", limit=50)` | Historical Polymarket order books from [Resolved Markets](https://resolvedmarkets.com). A free API key covers every crypto market back to March 2026; paid plans add sports, weather, equities and economics. |
 | `ParquetSource("folder/")` | Your own data in the documented [two-file Parquet layout](https://github.com/resolvedmarkets/resolvedkit/blob/main/src/resolvedkit/data/parquet.py) |
 
 ```bash
